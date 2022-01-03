@@ -720,7 +720,7 @@ def sap_vp(mode, bsr01, bsr02):
                 cmd = sap_tmp(mode, vpls, sap)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 удалено ==')
                 result1 = ssh.invoke(cmd.vpls_del, s1)
-                print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 удалено ==')
+                print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 удалено ==')
                 result2 = ssh.invoke(cmd.vpls_del, s2)
                 print(f'{bc.GREEN}[+]{bc.ENDC} === Готово! ===')
                 ssh.close(s1)
