@@ -5,7 +5,7 @@
 * [Setup](#setup)
 
 ## General info
-This project was created to automate the daily routine tasks of an NOC engineer.
+This project was created to automate the daily routine tasks for NOC engineer.
     
 ## Technologies
 Project is created with:
@@ -16,4 +16,5 @@ Project is created with:
 * psycopg2 2.9.1
     
 ## Setup
-To run this project, git clone it locally
+To run this project, git clone it locally.
+If needed change variables in main/config.py
