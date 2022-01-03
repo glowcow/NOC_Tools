@@ -8,10 +8,7 @@ from main.log import log
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 from  main.config import radctl, mik_acc, mgmt, cts_var, bc
-import time
-import re
-import random
-import secrets
+import time, re, random, secrets
 
 def l2vpn_config():
     print(f'{bc.CYAN}{"="*25} Start configuration L2VPN {"="*25}{bc.ENDC}')

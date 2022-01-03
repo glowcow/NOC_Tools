@@ -12,8 +12,8 @@ class bc:
 
 class log_var:
     path = '/FILE_SERVER/LOG/Script/'
-    fname1 = 'noc-config.log'
-    fname2 = 'svc-config.log'
+    fname1 = 'noc-configure.log'
+    fname2 = 'svc-configure.log'
     fname3 = 'guts-backup.log'
 
 class radctl:
