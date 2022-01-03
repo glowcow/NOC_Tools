@@ -1,0 +1,7 @@
+#ignore dir
+main/__pycache__
+#ignore files
+Backup_src.py
+express_poller.py
+guts_backup.py
+USR_cfg.py
