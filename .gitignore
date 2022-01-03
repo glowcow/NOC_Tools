@@ -1,0 +1,6 @@
+# Byte-compiled / optimized / DLL files
+main/__pycache__
+Backup_src.py
+express_poller.py
+guts_backup.py
+USR_cfg.py
