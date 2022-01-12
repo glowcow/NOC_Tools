@@ -15,6 +15,7 @@ Project is created with:
 * multiprocess 0.70
 * python3-netsnmp 1.1a1
 * psycopg2 2.9.1
+* pyTelegramBotAPI 4.2.0
     
 ## Setup
 To run this project, git clone it locally.
