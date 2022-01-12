@@ -12,6 +12,7 @@ Project is created with:
 * PostgreSQL 13
 * paramiko 2.8.0
 * simple-term-menu 1.4.1
+* multiprocess 0.70
 * python3-netsnmp 1.1a1
 * psycopg2 2.9.1
     
