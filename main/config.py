@@ -53,4 +53,4 @@ class cts_var:
     l2tp_lo_cts03 = '176.213.132.180'
 
 class tg_api:
-    bot_token = '949226977:AAH-CRfBcEdMHXInVc7XnUkDe-9johPAyDU'
+    bot_token = '#####'
