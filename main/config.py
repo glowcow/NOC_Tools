@@ -40,6 +40,7 @@ class mgmt:
     cts01 = '10.200.88.10'
     cts02 = '10.200.122.1'
     cts03 = '10.200.88.11'
+    cts04 = '10.200.122.2'
 
 class cts_var:
     subn_pool_cts01 = ['10.200.96.0/22', '10.200.100.0/23', '10.200.102.0/24']
@@ -51,6 +52,9 @@ class cts_var:
     subn_pool_cts03 = ['10.200.16.0/22', '10.200.20.0/23']
     eoip_pool_cts03 = list(range(10001, 15000))
     l2tp_lo_cts03 = '176.213.132.180'
+    subn_pool_cts04 = ['10.200.22.0/23', '10.200.24.0/22']
+    eoip_pool_cts04 = list(range(15001, 20000))
+    l2tp_lo_cts04 = '176.213.132.183'
 
 class tg_api:
-    bot_token = '#####'
+    bot_token = '949226977:AAH-CRfBcEdMHXInVc7XnUkDe-9johPAyDU'

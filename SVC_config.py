@@ -977,7 +977,7 @@ def launcher_2():
     cts_menu = TerminalMenu(cts_menu_items, title=cts_menu_title, menu_cursor=main_menu_cursor, menu_cursor_style=main_menu_cursor_style, menu_highlight_style=main_menu_style, cycle_cursor=True, clear_screen=False)
 
     cts_s_menu_title = "\n> Конфигурация CTS\n------------------------------------"
-    cts_s_menu_items = ['CTS01 - 10.200.88.10', 'CTS02 - 10.200.122.1', 'CTS03 - 10.200.88.11', 'Назад в предыдущее меню']
+    cts_s_menu_items = ['CTS01 - 10.200.88.10', 'CTS02 - 10.200.122.1', 'CTS03 - 10.200.88.11', 'CTS04 - 10.200.122.2', 'Назад в предыдущее меню']
     cts_s_menu_back = False
     cts_s_menu = TerminalMenu(cts_s_menu_items, title=cts_s_menu_title, menu_cursor=main_menu_cursor, menu_cursor_style=main_menu_cursor_style, menu_highlight_style=main_menu_style, cycle_cursor=True, clear_screen=False)
 
@@ -1003,13 +1003,13 @@ def launcher_2():
                         if bsr_sap_slct == 0:
                             sap_vp(bsr_sap_slct, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 1:
+                        elif bsr_sap_slct == 1:
                             sap_vp(bsr_sap_slct, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 2:
+                        elif bsr_sap_slct == 2:
                             sap_vp(bsr_sap_slct, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 3:
+                        elif bsr_sap_slct == 3:
                             sap_vp(bsr_sap_slct, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
                         elif bsr_sap_slct == 4:
@@ -1044,13 +1044,16 @@ def launcher_2():
                         if cts_s_slct == 0:
                             cts_config(mgmt.cts01, cts_var.subn_pool_cts01, cts_var.eoip_pool_cts01, cts_var.l2tp_lo_cts01)
                             time.sleep(2)
-                        if cts_s_slct == 1:
+                        elif cts_s_slct == 1:
                             cts_config(mgmt.cts02, cts_var.subn_pool_cts02, cts_var.eoip_pool_cts02, cts_var.l2tp_lo_cts02)
                             time.sleep(2)
-                        if cts_s_slct == 2:
+                        elif cts_s_slct == 2:
                             cts_config(mgmt.cts03, cts_var.subn_pool_cts03, cts_var.eoip_pool_cts03, cts_var.l2tp_lo_cts03)
                             time.sleep(2)
                         elif cts_s_slct == 3:
+                            cts_config(mgmt.cts04, cts_var.subn_pool_cts04, cts_var.eoip_pool_cts04, cts_var.l2tp_lo_cts04)
+                            time.sleep(2)
+                        elif cts_s_slct == 4:
                             cts_s_menu_back = True
                     cts_s_menu_back = False
                 elif cts_slct == 1:
@@ -1059,13 +1062,16 @@ def launcher_2():
                         if cts_s_slct == 0:
                             cts_remove(mgmt.cts01)
                             time.sleep(2)
-                        if cts_s_slct == 1:
+                        elif cts_s_slct == 1:
                             cts_remove(mgmt.cts02)
                             time.sleep(2)
-                        if cts_s_slct == 2:
+                        elif cts_s_slct == 2:
                             cts_remove(mgmt.cts03)
                             time.sleep(2)
                         elif cts_s_slct == 3:
+                            cts_remove(mgmt.cts04)
+                            time.sleep(2)
+                        elif cts_s_slct == 4:
                             cts_s_menu_back = True
                     cts_s_menu_back = False
                 elif cts_slct == 2:
@@ -1078,4 +1084,5 @@ def launcher_2():
             main_menu_exit = True
             print("=== Выход ===")
 
-launcher_2()
+if __name__ == "__main__":
+    launcher_2()

@@ -2,10 +2,7 @@
 
 from main.ssh import ssh
 from main.config import radctl, mgmt, bc
-import base64
-import re
-import time
-import sys
+import base64, re, time, sys
 
 def mac_flap(vpls, mac, sap, minutes):
     cmd = f'show service id {vpls} fdb detail | match {mac}'
@@ -43,4 +40,5 @@ def launcher():
     else:
         launcher()
 
-launcher()
+if __name__ == "__main__":
+    launcher()

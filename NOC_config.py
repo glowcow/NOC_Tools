@@ -803,13 +803,13 @@ def launcher_2():
                         if bsr_sap_slct == 0:
                             sap_vp(0, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 1:
+                        elif bsr_sap_slct == 1:
                             sap_vp(1, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 2:
+                        elif bsr_sap_slct == 2:
                             sap_vp(2, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
-                        if bsr_sap_slct == 3:
+                        elif bsr_sap_slct == 3:
                             sap_vp(3, mgmt.bsr01, mgmt.bsr02)
                             time.sleep(2)
                         elif bsr_sap_slct == 4:
@@ -858,4 +858,5 @@ def launcher_2():
             main_menu_exit = True
             print("=== Выход ===")
 
-launcher_2()
+if __name__ == "__main__":
+    launcher_2()

@@ -8,10 +8,10 @@ from main.tg_api import tg_msg
 from main.snmp import snmp
 from main.config import radctl, mik_acc, bc
 from multiprocessing import Pool
-import time
-import re
+import time, re
 
 def bsa_backup(host):
+    date = time.strftime('%d-%b-%Y')
     if re.findall(r'[0-9]+(?:\.[0-9]+){3}', host):
         bsa = (pgsql.read(f"SELECT bsa FROM bsa WHERE ip_vprn140 = '{host}'"))[0]
         bsa_type = snmp.vendor(host)
@@ -56,12 +56,15 @@ def bsa_backup(host):
             print(f'{bc.RED}{host}|BSA{bsa} - SNMP Error!{bc.ENDC}')
             return (f'{host}|BSA{bsa} - SNMP Error!')
 
-bsa_list = pgsql.read(f'SELECT ip_vprn140 FROM bsa')
-date = time.strftime('%d-%b-%Y')
-pool = Pool(64)
-err_list_bsa = pool.map(bsa_backup, bsa_list)
-err_list = list(filter(bool,(err_list_bsa)))
-if len(err_list) != 0:
-    msg = "\n".join(err_list)
-    log.write(msg, 3)
-    tg_msg.send('-1001301855627', '====== #backup_script_2 💾======', f'<code>{msg}</code>')
+def main():
+    bsa_list = pgsql.read(f'SELECT ip_vprn140 FROM bsa')
+    pool = Pool(64)
+    err_list_bsa = pool.map(bsa_backup, bsa_list)
+    err_list = list(filter(bool,(err_list_bsa)))
+    if len(err_list) != 0:
+        msg = "\n".join(err_list)
+        log.write(msg, 3)
+        tg_msg.send('-1001301855627', '====== #backup_script_2 💾======', f'<code>{msg}</code>')
+
+if __name__ == "__main__":
+    main()
