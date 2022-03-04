@@ -349,7 +349,7 @@ def vpls_create(vpls_type, bsr01, bsr02):
     if vpls_type == 1 and s1 != False and s2 != False:
         mtu = input('Введите значение MTU[1514-9194]:')
         vpls_all = []
-        check_1 = (f'show service fdb-info | match "Service Id" | match expression "[5][6-9][0-9][0-9][0-9]"')
+        check_1 = (f'show service fdb-info | match "Service Id" | match expression "[5][8-9][0-9][0-9][0-9]"')
         for each in ssh.invoke(check_1, s1).split():
             fnd = re.findall(r'\b\d{5}\b', each)
             if fnd:
@@ -953,7 +953,7 @@ def sap_vp(mode, bsr01, bsr02):
         return False
 
 def launcher_2():
-    main_menu_title = "\n------------------------------------\nv3.5|06.12.2021|Service configurator\n------------------------------------\n  Главное меню | Что будем делать?\n------------------------------------"
+    main_menu_title = "\n------------------------------------\nv3.6|04.03.2022|Service configurator\n------------------------------------\n  Главное меню | Что будем делать?\n------------------------------------"
     main_menu_items = ['Конфигурация BSR (vpls, vprn, sap)', 'Конфигурация L2VPN (PW-полукольца)', 'Конфигурация CTS', 'Посмотреть лог за сегодня', 'Выход']
     main_menu_cursor = "> "
     main_menu_cursor_style = ("fg_cyan", "bold")
