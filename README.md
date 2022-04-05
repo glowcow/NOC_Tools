@@ -11,7 +11,7 @@ This project was created to automate the daily routine tasks for NOC engineer.
 Project is created with:
 * PostgreSQL 13
 * multiprocess 0.70.12.2
-* paramiko 2.9.2
+* paramiko 2.10.3
 * psycopg2 2.9.1
 * pyTelegramBotAPI 4.4.0
 * python3_netsnmp 1.1a1
