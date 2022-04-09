@@ -1,6 +1,6 @@
 #!/bin/python3
 
-class bc:
+class bc: #makes some colors
     CYAN = '\033[96m'
     WHITE = '\033[97m'
     GREEN = '\033[92m'
@@ -10,24 +10,24 @@ class bc:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-class log_var:
+class log_var: #path to local log files and they prefix name e.g Jan-2022_{fname}
     path = '/FILE_SERVER/LOG/Script/'
-    fname1 = 'noc-configure.log'
-    fname2 = 'svc-configure.log'
-    fname3 = 'guts-backup.log'
+    fname1 = 'noc-configure.log' #prefix name for NOC_config log file
+    fname2 = 'svc-configure.log' #prefix name for SVC_config log file
+    fname3 = 'nd-backup.log' #prefix name for nd_backup log file
 
-class radctl:
+class radctl: #RADIUS rw user, all values must be encoded in base64
     username = 'Z3V0c2NvbmY='
     password = 'OG5PTklkamNWbw=='
 
-class mik_acc:
+class mik_acc: #mikrotik router rw user, all values must be encoded in base64
     username_m = 'YWRtaW4='
     password_m = 'cG9saW5vbQ=='
     password_m2 = 'ZW5mb3J0aXQ='
     username_cm = 'c2NyaXB0MGNvbmZpZw=='
     password_cm = 'bmJkTVBrbzBwYjVz'
 
-class sql_var:
+class sql_var: #usr_pg & pass_pg must be encoded in base64
     db_pg = 'pw_rings'
     usr_pg = 'YXV0b19zY3JpcHQ='
     pass_pg = 'd25xSkV5V2tMVld1Wmo0cA=='
