@@ -45,7 +45,7 @@ class ssh:
 
     def invoke(cmd, session):
         session.send(cmd+'\n')
-        time.sleep(2)
+        time.sleep(4)
         out = session.recv(999999).decode("ascii")
         return out
 
