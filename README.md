@@ -19,4 +19,4 @@ Project is created with:
     
 ## Setup
 To run this project git clone it locally, install required packages via PIP ```pip3 install -r requirements.txt```.
-If needed change variables in main/config.py. For some definitions in scripts postgresql database must be configured.
+If needed change variables in ```main/config.py```. For some definitions in scripts postgresql database must be configured.
