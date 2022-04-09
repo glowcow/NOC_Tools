@@ -1,18 +1,15 @@
 #!/bin/python3
 
-from main.config import bc
-import netsnmp
-import re
+from main.config import bc, snmp_com
+import re, netsnmp, base64
 
 class snmp:
-    com1 = 'holding08'
-    com2 = 'engforta'
     def vendor(host):
         oid = 'iso.3.6.1.2.1.1.1.0'
-        snmpw = netsnmp.snmpget(oid, Version=2, DestHost=host, Community=snmp.com1, Retries=1, Timeout=250000)
+        snmpw = netsnmp.snmpget(oid, Version=2, DestHost=host, Community=base64.b64decode(snmp_com.prim_com).decode("ascii"), Retries=1, Timeout=250000)
         (out,) = snmpw #tuple to variables
         if out is None:
-            snmpw = netsnmp.snmpget(oid, Version=2, DestHost=host, Community=snmp.com2, Retries=1, Timeout=250000)
+            snmpw = netsnmp.snmpget(oid, Version=2, DestHost=host, Community=base64.b64decode(snmp_com.old_com).decode("ascii"), Retries=1, Timeout=250000)
             (out,) = snmpw
             if out is None:
                 return False
@@ -36,7 +33,7 @@ class snmp:
                     return False
 
     def walk(host, oid):
-        snmpw = netsnmp.Session(Version=2, DestHost=host, Community=snmp.com1, Retries=1, Timeout=250000)
+        snmpw = netsnmp.Session(Version=2, DestHost=host, Community=base64.b64decode(snmp_com.prim_com).decode("ascii"), Retries=1, Timeout=250000)
         snmpw.UseLongNames = 0
         snmpw.UseNumeric = 0
         vars = netsnmp.VarList(oid)

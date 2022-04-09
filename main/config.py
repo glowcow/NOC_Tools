@@ -10,6 +10,10 @@ class bc: #makes some colors
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+class snmp_com: #primary and old SNMP communities for check network devices, must be encoded in base64
+    prim_com = 'aG9sZGluZzA4'
+    old_com = 'ZW5nZm9ydGE='
+
 class log_var: #path to local log files and they prefix name e.g Jan-2022_{fname}
     path = '/FILE_SERVER/LOG/Script/'
     fname1 = 'noc-configure.log' #prefix name for NOC_config log file
