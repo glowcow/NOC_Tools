@@ -1,9 +1,7 @@
 #!/bin/python3
 
-import psycopg2
-import time
-import base64
 from main.config import sql_var, bc
+import psycopg2, time, base64
 
 class pgsql:
     def read(cmd):

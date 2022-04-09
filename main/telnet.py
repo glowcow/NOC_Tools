@@ -1,9 +1,7 @@
 #!/bin/python3
 
-import base64
-import time
-import telnetlib
 from main.config import bc
+import base64, time, telnetlib
 
 class telnet:
     def huawei(cmd, host, username, password):

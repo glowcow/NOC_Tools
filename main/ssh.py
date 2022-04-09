@@ -1,10 +1,7 @@
 #!/bin/python3
 
-import time
-import base64
-import paramiko
-import socket
 from main.config import bc
+import time, base64, paramiko, socket
 
 class ssh:
     timeout = 30

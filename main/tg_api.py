@@ -1,8 +1,7 @@
 #!/bin/python3
 
 from main.config import tg_api, bc
-import telebot
-import re
+import telebot, re
 
 class tg_msg:
     def send(chat_id, title, msg):
