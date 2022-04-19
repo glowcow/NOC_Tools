@@ -733,7 +733,7 @@ def sap_vp(mode, bsr01, bsr02):
                 ssh.close(s2)
                 return False
             else:
-                cfg = ja2.cfg_render("sap_add-del/sap-vpls-del.cfg", vprn=vprn, sap=sap)
+                cfg = ja2.cfg_render("sap_add-del/sap-vpls-del.cfg", vpls=vpls, sap=sap)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 удалено ==')
                 result1 = ssh.invoke(cfg, s1)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 удалено ==')
