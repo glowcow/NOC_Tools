@@ -6,7 +6,7 @@ from main.sql import pgsql
 from main.telnet import telnet
 from main.log import log
 from main.config import radctl, mgmt, bc
-from main.templates import rsdp_pw_tmp, sdp_tmp, pw_tmp, operg_tmp, gi_tmp, sap_tmp
+from main.templates import rsdp_pw_tmp, gi_tmp, sap_tmp
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 import re, time, random
@@ -196,14 +196,15 @@ def sdp_pw_create(mode, bsr01, bsr02):
             a_mku_ipb = pgsql.read(f"select ip_base from bsa where bsa = '{a_mku}'")[0]
             b_mku_ipb = pgsql.read(f"select ip_base from bsa where bsa = '{b_mku}'")[0]
             print(f'\nНовая пара: {bc.CYAN}SDP-5{ring}{bc.ENDC}\nBSR01 - Активная {bc.GREEN}MKU-{a_mku}{bc.ENDC}|{a_mku_ipb}\nBSR02 - Резервная {bc.GREEN}MKU-{b_mku}{bc.ENDC}|{b_mku_ipb}\nBinding port BSR01: LAG-{bin_port1}\nBinding port BSR02: LAG-{bin_port2}')
-            cmd = sdp_tmp(sdp, a_mku, b_mku, a_mku_ipb, b_mku_ipb, bin_port1, bin_port2)
             slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
             if slct == 'y':
                 pgsql.write(pg)
                 print(f'{bc.GREEN}[!]{bc.ENDC} == Данные записаны в БД ==')
-                result1 = ssh.invoke(cmd.bsr01, s1)
+                cfg1 = ja2.cfg_render("sdp_pw_create/bsr01.cfg", sdp=sdp, a_mku=a_mku, a_mku_ipb=a_mku_ipb, bin_port1=bin_port1)
+                result1 = ssh.invoke(cfg1, s1)
                 print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR01 настроено ==')
-                result2 = ssh.invoke(cmd.bsr02, s2)
+                cfg2 = ja2.cfg_render("sdp_pw_create/bsr02.cfg", sdp=sdp, b_mku=b_mku, b_mku_ipb=b_mku_ipb, bin_port2=bin_port2)
+                result2 = ssh.invoke(cfg2, s2)
                 print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR02 настроено ==')
                 log.write(f'==Данные записаны в БД!==\n{pg}\n{result1}\n{result2}', 1)
                 ssh.close(s1)
@@ -229,23 +230,27 @@ def sdp_pw_create(mode, bsr01, bsr02):
                     b = int(a.split()[0])
                     pw_used.append(b)
             pw = str(sorted(set(pw_all)-set(pw_used))[0])
-            cmd = pw_tmp(sdp, pw, a_mku, b_mku, a_mku_ipb, b_mku_ipb)
             print(f'\nПара MKU: {bc.CYAN}SDP-5{ring}{bc.ENDC}\nBSR01 - Активная {bc.GREEN}MKU-{a_mku}{bc.ENDC}|{a_mku_ip}|{a_mku_ipb}\nBSR02 - Резервная {bc.GREEN}MKU-{b_mku}{bc.ENDC}|{b_mku_ip}|{b_mku_ipb}\nPW порт: {bc.GREEN}{pw}{bc.ENDC}')
             slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
             if slct == 'y':
-                result1 = ssh.invoke(cmd.bsr01, s1)
+                cfg1 = ja2.cfg_render("sdp_pw_create/bsr01-pw.cfg", sdp=sdp, pw=pw, a_mku=a_mku)
+                result1 = ssh.invoke(cfg1, s1)
                 print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR01 настроено ==')
-                result2 = ssh.invoke(cmd.bsr02, s2)
+                cfg2 = ja2.cfg_render("sdp_pw_create/bsr02-pw.cfg", sdp=sdp, pw=pw, b_mku=b_mku)
+                result2 = ssh.invoke(cfg2, s2)
                 print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR02 настроено ==')
                 log.write(f'{result1}\n{result2}', 1)
                 if a_mku == b_mku:
-                    result_aa = telnet.huawei(cmd.mku_aa, a_mku_ip, radctl.username, radctl.password)
+                    cfg3 = ja2.cfg_render("sdp_pw_create/mku-pw-act-act.cfg", pw=pw)
+                    result_aa = telnet.huawei(cfg3, a_mku_ip, radctl.username, radctl.password)
                     print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{a_mku} настроено ==')
                     log.write(result_aa, 1)
                 else:
-                    result_a = telnet.huawei(cmd.mku_a, a_mku_ip, radctl.username, radctl.password)
+                    cfg4 = ja2.cfg_render("sdp_pw_create/mku-pw-act.cfg", pw=pw, b_mku=b_mku, b_mku_ipb=b_mku_ipb)
+                    result_a = telnet.huawei(cfg4, a_mku_ip, radctl.username, radctl.password)
                     print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{a_mku} настроено ==')
-                    result_b = telnet.huawei(cmd.mku_b, b_mku_ip, radctl.username, radctl.password)
+                    cfg5 = ja2.cfg_render("sdp_pw_create/mku-pw-bkp.cfg", pw=pw, a_mku=a_mku, a_mku_ipb=a_mku_ipb)
+                    result_b = telnet.huawei(cfg5, b_mku_ip, radctl.username, radctl.password)
                     print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{b_mku} настроено ==')
                     log.write(f'{result_a}\n{result_b}', 1)
                 ssh.close(s1)
