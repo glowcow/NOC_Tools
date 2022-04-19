@@ -300,6 +300,9 @@ def oper_create(bsr01, bsr02):
         ip_pool = []
         for ip in (list(IPv4Network(snet).hosts())):
                     ip_pool.append(str(ip))
+        address1 = f'{ip_pool[-1]}/29'
+        address2 = f'{ip_pool[-2]}/29'
+        backup = str(ip_pool[0])
         if mku:
             a_mku, b_mku = mku
             a_mku_ip = pgsql.read(f"select ip_vprn100 from bsa where bsa = '{a_mku}'")[0]
@@ -307,23 +310,27 @@ def oper_create(bsr01, bsr02):
             a_mku_ipb = pgsql.read(f"select ip_base from bsa where bsa = '{a_mku}'")[0]
             b_mku_ipb = pgsql.read(f"select ip_base from bsa where bsa = '{b_mku}'")[0]
             if f'SDP-{sdp}' not in u_sdp1:
-                cmd = operg_tmp(sdp, ip_pool, a_mku, b_mku, a_mku_ipb, b_mku_ipb)
                 print(f'\nSDP: {bc.CYAN}SDP-{sdp}{bc.ENDC}\nСледующая подсеть: {snet}\nBSR01 VRRP IP: {bc.GREEN}{ip_pool[-1]}{bc.ENDC}\nBSR02 VRRP IP: {bc.GREEN}{ip_pool[-2]}{bc.ENDC}\nBSR01 - Активная {bc.GREEN}MKU-{a_mku}{bc.ENDC}|{a_mku_ip}|{a_mku_ipb}\nBSR02 - Резервная {bc.GREEN}MKU-{b_mku}{bc.ENDC}|{b_mku_ip}|{b_mku_ipb}\n')
                 slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
                 if slct == 'y':
-                    result1 = ssh.invoke(cmd.bsr01, s1)
+                    cfg1 = ja2.cfg_render("oper_group_create/bsr01.cfg", sdp=sdp, address1=address1, backup=backup)
+                    result1 = ssh.invoke(cfg1, s1)
                     print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR01 настроено ==')
-                    result2 = ssh.invoke(cmd.bsr02, s2)
+                    cfg2 = ja2.cfg_render("oper_group_create/bsr02.cfg", sdp=sdp, address2=address2, backup=backup)
+                    result2 = ssh.invoke(cfg2, s2)
                     print(f'{bc.GREEN}[!]{bc.ENDC} == На BSR02 настроено ==')
                     log.write(f'{result1}\n{result2}', 1)
                     if a_mku == b_mku:
-                        result_aa = telnet.huawei(cmd.mku_aa, a_mku_ip, radctl.username, radctl.password)
+                        cfg3 = ja2.cfg_render("oper_group_create/mku-act-act.cfg", sdp=sdp)
+                        result_aa = telnet.huawei(cfg3, a_mku_ip, radctl.username, radctl.password)
                         print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{a_mku} настроено ==')
                         log.write(result_aa, 1)
                     else:
-                        result_a = telnet.huawei(cmd.mku_a, a_mku_ip, radctl.username, radctl.password)
+                        cfg4 = ja2.cfg_render("oper_group_create/mku-act.cfg", sdp=sdp, b_mku=a_mku, b_mku_ipb=a_mku_ipb)
+                        cfg5 = ja2.cfg_render("oper_group_create/mku-bkp.cfg", sdp=sdp, a_mku=b_mku, a_mku_ipb=b_mku_ipb)
+                        result_a = telnet.huawei(cfg4, a_mku_ip, radctl.username, radctl.password)
                         print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{a_mku} настроено ==')
-                        result_b = telnet.huawei(cmd.mku_b, b_mku_ip, radctl.username, radctl.password)
+                        result_b = telnet.huawei(cfg5, b_mku_ip, radctl.username, radctl.password)
                         print(f'{bc.GREEN}[!]{bc.ENDC} == На MKU-{b_mku} настроено ==')
                         log.write(f'{result_a}\n{result_b}', 1)
                     ssh.close(s1)
