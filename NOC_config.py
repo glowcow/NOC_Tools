@@ -6,7 +6,7 @@ from main.sql import pgsql
 from main.telnet import telnet
 from main.log import log
 from main.config import radctl, mgmt, bc
-from main.templates import rsdp_pw_tmp, sdp_tmp, pw_tmp, operg_tmp, gi_tmp, vpls_tmp, sap_tmp
+from main.templates import rsdp_pw_tmp, sdp_tmp, pw_tmp, operg_tmp, gi_tmp, sap_tmp
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 import re, time, random
@@ -736,7 +736,7 @@ def sap_vp(mode, bsr01, bsr02):
         return False
 
 def launcher_2():
-    main_menu_title = "\n--------------------------------------\nv1.7 | 02.01.2022 | NOC configurator\n--------------------------------------\nГлавное меню | Что будем делать?\n--------------------------------------"
+    main_menu_title = "\n--------------------------------------\nv2.1 | 20.04.2022 | NOC configurator\n--------------------------------------\nГлавное меню | Что будем делать?\n--------------------------------------"
     main_menu_items = ['Конфигурация BSR', 'Конфигурация SDP и PW ГУТС и Радио', 'Работа с SQL', 'Посмотреть лог за сегодня', 'Выход']
     main_menu_cursor = "> "
     main_menu_cursor_style = ("fg_cyan", "bold")
