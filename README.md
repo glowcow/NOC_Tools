@@ -16,6 +16,7 @@ This project was created to automate the daily routine tasks for network enginee
 Project is created with:
 * PostgreSQL 13
 * multiprocess 0.70.12.2
+* jinja2 2.11.3
 * paramiko 2.10.3
 * psycopg2 2.9.1
 * pyTelegramBotAPI 4.4.0
