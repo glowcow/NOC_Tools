@@ -1,5 +1,6 @@
 #!/bin/python3
 
+from main.ja_render import ja2
 from main.ssh import ssh
 from main.sql import pgsql
 from main.telnet import telnet
@@ -494,17 +495,18 @@ def vpls_create(vpls_type, bsr01, bsr02):
                 print(f'{bc.RED}[!]{bc.ENDC} VPLS {new_vpls} уже существует!')
                 return False
             else:
-                cmd = vpls_tmp(new_vpls, mtu)
                 slct = input(f'VPLS {bc.GREEN}{new_vpls}{bc.ENDC} свободен, начинаем настройку? (y/n):')
                 if slct != 'y':
                     return False
                 else:
                     print(f'Настраиваю на BSR01...')
-                    result1 = ssh.invoke(cmd.bs_bsr01, s1)
+                    cfg1 = ja2.cfg_render("vpls_create/bsr01_basic_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result1 = ssh.invoke(cfg1, s1)
                     log.write(result1, 1)
                     print(f'Готово')
                     print(f'Настраиваю на BSR02...')
-                    result2 = ssh.invoke(cmd.bs_bsr02, s2)
+                    cfg2 = ja2.cfg_render("vpls_create/bsr02_basic_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result2 = ssh.invoke(cfg2, s2)
                     log.write(result2, 1)
                     print(f'Готово')
                     ssh.close(s1)
@@ -518,17 +520,18 @@ def vpls_create(vpls_type, bsr01, bsr02):
                 print(f'{bc.RED}[!]{bc.ENDC} VPLS {new_vpls} уже существует!')
                 return False
             else:
-                cmd = vpls_tmp(new_vpls, mtu)
                 slct = input(f'VPLS {bc.GREEN}{new_vpls}{bc.ENDC} свободен, начинаем настройку? (y/n):')
                 if slct != 'y':
                     return False
                 else:
                     print(f'Настраиваю на BSR01...')
-                    result1 = ssh.invoke(cmd.bs_bsr01, s1)
+                    cfg1 = ja2.cfg_render("vpls_create/bsr01_basic_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result1 = ssh.invoke(cfg1, s1)
                     log.write(result1, 1)
                     print(f'Готово')
                     print(f'Настраиваю на BSR02...')
-                    result2 = ssh.invoke(cmd.bs_bsr02, s2)
+                    cfg2 = ja2.cfg_render("vpls_create/bsr02_basic_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result2 = ssh.invoke(cfg2, s2)
                     log.write(result2, 1)
                     print(f'Готово')
                     ssh.close(s1)
@@ -545,17 +548,18 @@ def vpls_create(vpls_type, bsr01, bsr02):
                 print(f'{bc.RED}[!]{bc.ENDC} VPLS {new_vpls} уже существует!')
                 return False
             else:
-                cmd = vpls_tmp(new_vpls, mtu)
                 slct = input(f'VPLS {bc.GREEN}{new_vpls}{bc.ENDC} свободен, начинаем настройку? (y/n):')
                 if slct != 'y':
                     return False
                 else:
                     print(f'Настраиваю на BSR01...')
-                    result1 = ssh.invoke(cmd.rt_bsr01, s1)
+                    cfg1 = ja2.cfg_render("vpls_create/bsr01_mg_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result1 = ssh.invoke(cfg1, s1)
                     log.write(result1, 1)
                     print(f'Готово')
                     print(f'Настраиваю на BSR02...')
-                    result2 = ssh.invoke(cmd.rt_bsr02, s2)
+                    cfg2 = ja2.cfg_render("vpls_create/bsr02_mg_add.cfg", new_vpls=new_vpls, mtu=mtu)
+                    result2 = ssh.invoke(cfg2, s2)
                     log.write(result2, 1)
                     print(f'Готово')
                     ssh.close(s1)
