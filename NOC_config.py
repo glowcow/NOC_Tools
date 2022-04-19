@@ -6,7 +6,7 @@ from main.sql import pgsql
 from main.telnet import telnet
 from main.log import log
 from main.config import radctl, mgmt, bc
-from main.templates import rsdp_pw_tmp, gi_tmp, sap_tmp
+from main.templates import rsdp_pw_tmp, gi_tmp
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 import re, time, random
@@ -641,11 +641,11 @@ def sap_vp(mode, bsr01, bsr02):
                 ssh.close(s2)
                 return False
             else:
-                cmd = sap_tmp(mode, vprn, ifc, opg, ip, sap, cmbs, rate)
+                cfg = ja2.cfg_render("sap_add-del/sap-vprn-add.cfg", vprn=vprn, ifc=ifc, opg=opg, ip=ip, sap=sap, cmbs=cmbs, rate=rate)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                result1 = ssh.invoke(cmd.vprn_add, s1)
+                result1 = ssh.invoke(cfg, s1)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
-                result2 = ssh.invoke(cmd.vprn_add, s2)
+                result2 = ssh.invoke(cfg, s2)
                 print(f'{bc.GREEN}[+]{bc.ENDC} === Готово! ===')
                 ssh.close(s1)
                 ssh.close(s2)
@@ -678,11 +678,11 @@ def sap_vp(mode, bsr01, bsr02):
                 ssh.close(s2)
                 return False
             else:
-                cmd = sap_tmp(mode, vpls, sap, rate)
+                cfg = ja2.cfg_render("sap_add-del/sap-vpls-add.cfg", vpls=vpls, sap=sap, rate=rate)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                result1 = ssh.invoke(cmd.vpls_add, s1)
+                result1 = ssh.invoke(cfg, s1)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
-                result2 = ssh.invoke(cmd.vpls_add, s2)
+                result2 = ssh.invoke(cfg, s2)
                 print(f'{bc.GREEN}[+]{bc.ENDC} === Готово! ===')
                 ssh.close(s1)
                 ssh.close(s2)
@@ -707,11 +707,11 @@ def sap_vp(mode, bsr01, bsr02):
                 ssh.close(s2)
                 return False
             else:
-                cmd = sap_tmp(mode, vprn, ifc, sap)
+                cfg = ja2.cfg_render("sap_add-del/sap-vprn-del.cfg", vprn=vprn, ifc=ifc, sap=sap)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 удалено ==')
-                result1 = ssh.invoke(cmd.vprn_del, s1)
+                result1 = ssh.invoke(cfg, s1)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 удалено ==')
-                result2 = ssh.invoke(cmd.vprn_del, s2)
+                result2 = ssh.invoke(cfg, s2)
                 print(f'{bc.GREEN}[+]{bc.ENDC} === Готово! ===')
                 ssh.close(s1)
                 ssh.close(s2)
@@ -733,11 +733,11 @@ def sap_vp(mode, bsr01, bsr02):
                 ssh.close(s2)
                 return False
             else:
-                cmd = sap_tmp(mode, vpls, sap)
+                cfg = ja2.cfg_render("sap_add-del/sap-vpls-del.cfg", vprn=vprn, sap=sap)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 удалено ==')
-                result1 = ssh.invoke(cmd.vpls_del, s1)
+                result1 = ssh.invoke(cfg, s1)
                 print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 удалено ==')
-                result2 = ssh.invoke(cmd.vpls_del, s2)
+                result2 = ssh.invoke(cfg, s2)
                 print(f'{bc.GREEN}[+]{bc.ENDC} === Готово! ===')
                 ssh.close(s1)
                 ssh.close(s2)
