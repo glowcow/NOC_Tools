@@ -6,7 +6,7 @@ from main.sql import pgsql
 from main.telnet import telnet
 from main.log import log
 from main.config import radctl, mgmt, bc
-from main.templates import rsdp_pw_tmp, gi_tmp
+from main.templates import rsdp_pw_tmp
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 import re, time, random
@@ -384,16 +384,17 @@ def gi_create(mode, bsr01, bsr02):
                         mpsap_used.append(int(sap))
             srrp = str(sorted(set(srrp_all)-set(srrp_used))[0])
             mpsap = str(sorted(set(mpsap_all)-set(mpsap_used))[0])
-            cmd = gi_tmp(pw, srrp, mpsap)
             if mode == 0:
                 gi_check = ssh.invoke(f'show router 100 interface "CCTV" detail | match "PW-{pw}"\n', s1)
                 if not re.findall('VPRN G', gi_check):
                     print(f'\nPW: {bc.GREEN}{pw}{bc.ENDC}\nSRRP: {bc.GREEN}{srrp}{bc.ENDC}\nmessage-path: {bc.GREEN}pw-{pw}:{mpsap}{bc.ENDC}\nГрупповой интерфейс: {bc.GREEN}group-interface "CCTV-PW-{pw}"{bc.ENDC}')
                     slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
                     if slct == 'y':
-                        result1 = ssh.invoke(cmd.cctv_bsr01, s1)
+                        cfg1 = ja2.cfg_render("group_interface/cctv_bsr01.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result1 = ssh.invoke(cfg1, s1)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                        result2 = ssh.invoke(cmd.cctv_bsr02, s2)
+                        cfg2 = ja2.cfg_render("group_interface/cctv_bsr02.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result2 = ssh.invoke(cfg2, s2)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
                         log.write(f'{result1}\n{result2}', 1)
                         ssh.close(s1)
@@ -415,9 +416,11 @@ def gi_create(mode, bsr01, bsr02):
                     print(f'\nPW: {bc.GREEN}{pw}{bc.ENDC}\nSRRP: {bc.GREEN}{srrp}{bc.ENDC}\nmessage-path: {bc.GREEN}pw-{pw}:{mpsap}{bc.ENDC}\nГрупповой интерфейс: {bc.GREEN}group-interface "IPOE-PW-{pw}"{bc.ENDC}')
                     slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
                     if slct == 'y':
-                        result1 = ssh.invoke(cmd.ipoe_bsr01, s1)
+                        cfg1 = ja2.cfg_render("group_interface/ipoe_bsr01.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result1 = ssh.invoke(cfg1, s1)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                        result2 = ssh.invoke(cmd.ipoe_bsr02, s2)
+                        cfg2 = ja2.cfg_render("group_interface/ipoe_bsr02.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result2 = ssh.invoke(cfg2, s2)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
                         log.write(f'{result1}\n{result2}', 1)
                         ssh.close(s1)
@@ -434,9 +437,11 @@ def gi_create(mode, bsr01, bsr02):
                     print(f'\nPW: {bc.GREEN}{pw}{bc.ENDC}\nSRRP: {bc.GREEN}{srrp}{bc.ENDC}\nmessage-path: {bc.GREEN}pw-{pw}:{mpsap}{bc.ENDC}\nГрупповой интерфейс: {bc.GREEN}group-interface "DEFAULT-PW-{pw}"{bc.ENDC}')
                     slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
                     if slct == 'y':
-                        result1 = ssh.invoke(cmd.sdef_bsr01, s1)
+                        cfg1 = ja2.cfg_render("group_interface/sdef_bsr01.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result1 = ssh.invoke(cfg1, s1)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                        result2 = ssh.invoke(cmd.sdef_bsr02, s2)
+                        cfg2 = ja2.cfg_render("group_interface/sdef_bsr02.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result2 = ssh.invoke(cfg2, s2)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
                         log.write(f'{result1}\n{result2}', 1)
                         ssh.close(s1)
@@ -459,9 +464,11 @@ def gi_create(mode, bsr01, bsr02):
                     print(f'\nPW: {bc.GREEN}{pw}{bc.ENDC}\nSRRP: {bc.GREEN}{srrp}{bc.ENDC}\nmessage-path: {bc.GREEN}pw-{pw}:{mpsap}{bc.ENDC}\nГрупповой интерфейс: {bc.GREEN}group-interface "ENFORTA-PW-{pw}"{bc.ENDC}')
                     slct = input(f'\n{bc.BOLD}Начинаем настройку? (y/n):{bc.ENDC}')
                     if slct == 'y':
-                        result1 = ssh.invoke(cmd.aenf_bsr01, s1)
+                        cfg1 = ja2.cfg_render("group_interface/aenf_bsr01.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result1 = ssh.invoke(cfg1, s1)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR01 настроено ==')
-                        result2 = ssh.invoke(cmd.aenf_bsr02, s2)
+                        cfg2 = ja2.cfg_render("group_interface/aenf_bsr02.cfg", pw=pw, srrp=srrp, mpsap=mpsap)
+                        result2 = ssh.invoke(cfg2, s2)
                         print(f'{bc.GREEN}[+]{bc.ENDC} == На BSR02 настроено ==')
                         log.write(f'{result1}\n{result2}', 1)
                         ssh.close(s1)
