@@ -6,7 +6,6 @@ from main.sql import pgsql
 from main.telnet import telnet
 from main.log import log
 from main.config import radctl, mgmt, bc
-from main.templates import rsdp_pw_tmp
 from ipaddress import IPv4Network
 from simple_term_menu import TerminalMenu
 import re, time, random
