@@ -28,12 +28,13 @@ class tg_file:
         bot = telebot.TeleBot(tg_api.bot_token)
         try:
             file = open(path, 'rb')
-            bot.send_document(chat_id=chat_id , data=file)
-            print(f'{bc.GREEN}[+]{bc.ENDC} Telegram file from {bc.CYAN}{path}{bc.ENDC} sent successfully!')
+            bot.send_document(chat_id=chat_id, caption=f'{title}', parse_mode='HTML', data=file)
+            print(f'{bc.GREEN}[+]{bc.ENDC} Telegram file from {bc.CYAN}{path}{bc.ENDC} to {bc.GREEN}{chat_id}{bc.ENDC} sent successfully!')
             return True
         except telebot.apihelper.ApiTelegramException as err:
             if re.findall('Error code: 413', str(err)):
                 print(f'{bc.RED}[!]{bc.ENDC} Telegram API Error: {err}!')
+            return False
         except:
             print(f'{bc.RED}[!]{bc.ENDC} Telegram API Error: Unknown!')
             return False
