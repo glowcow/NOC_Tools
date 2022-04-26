@@ -369,12 +369,12 @@ def vpls_create(vpls_type, bsr01, bsr02):
                     return False
                 else:
                     print(f'Настраиваю на BSR01...')
-                    cmd1 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 12:{new_vpls} create\nno shutdown\nexit\nno shutdown\nexit\n')
+                    cmd1 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 12:{new_vpls} create\nno shutdown\nexit\nmac-move\nmove-frequency 5\nretry-timeout 5\nnumber-retries 0\nno shutdown\nexit\nno shutdown\nexit\n')
                     result1 = ssh.invoke(cmd1, s1)
                     log.write(result1, 2)
                     print(f'Готово')
                     print(f'Настраиваю на BSR02...')
-                    cmd2 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 21:{new_vpls} create\nno shutdown\nexit\nno shutdown\nexit\n')
+                    cmd2 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 21:{new_vpls} create\nno shutdown\nexit\nmac-move\nmove-frequency 5\nretry-timeout 5\nnumber-retries 0\nno shutdown\nexit\nno shutdown\nexit\n')
                     result2 = ssh.invoke(cmd2, s2)
                     log.write(result2, 2)
                     print(f'Готово')
@@ -394,12 +394,12 @@ def vpls_create(vpls_type, bsr01, bsr02):
                     return False
                 else:
                     print(f'Настраиваю на BSR01...')
-                    cmd1 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 12:{new_vpls} create\nno shutdown\nexit\nno shutdown\nexit\n')
+                    cmd1 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 12:{new_vpls} create\nno shutdown\nexit\nmac-move\nmove-frequency 5\nretry-timeout 5\nnumber-retries 0\nno shutdown\nexit\nno shutdown\nexit\n')
                     result1 = ssh.invoke(cmd1, s1)
                     log.write(result1, 2)
                     print(f'Готово')
                     print(f'Настраиваю на BSR02...')
-                    cmd2 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 21:{new_vpls} create\nno shutdown\nexit\nno shutdown\nexit\n')
+                    cmd2 = (f'configure service vpls {new_vpls} create customer 1\ndescription "CREATED_BY_SCRIPT"\nservice-mtu {mtu}\nmesh-sdp 21:{new_vpls} create\nno shutdown\nexit\nmac-move\nmove-frequency 5\nretry-timeout 5\nnumber-retries 0\nno shutdown\nexit\nno shutdown\nexit\n')
                     result2 = ssh.invoke(cmd2, s2)
                     log.write(result2, 2)
                     print(f'Готово')
