@@ -59,6 +59,3 @@ class cts_var:
     subn_pool_cts04 = ['10.200.22.0/23', '10.200.24.0/22']
     eoip_pool_cts04 = list(range(15001, 20000))
     l2tp_lo_cts04 = '176.213.132.183'
-
-class tg_api:
-    bot_token = ''
